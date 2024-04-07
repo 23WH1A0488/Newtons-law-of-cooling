@@ -1,0 +1,50 @@
+import sympy as sp
+def area_between_curves(func1, func2, a, b):
+    """
+    Calculate the area between two curves.
+    """
+    x = sp.symbols('x')
+    area = sp.integrate(func1 - func2, (x, a, b))
+    return abs(area)
+def volume_of_revolution(func, a, b, axis='x'):
+    """
+    Calculate the volume of revolution about x or y-axis.
+    """
+    x = sp.symbols('x')
+    if axis == 'x':
+        volume = sp.pi * sp.integrate(func**2, (x, a, b))
+    elif axis == 'y':
+        y = sp.symbols('y')
+        volume = sp.pi * sp.integrate(func**2, (y, a, b))
+    else:
+        raise ValueError("Invalid axis! Please choose 'x' or 'y'.")
+    return volume
+def main():
+    print("Welcome to the Calculus Toolkit!")
+    # Input the functions
+    func1_str = input("Enter the first function: ")
+    func2_str = input("Enter the second function: ")
+    # Convert input strings to SymPy expressions
+    x = sp.symbols('x')
+    func1 = sp.sympify(func1_str)
+    func2 = sp.sympify(func2_str)
+    # Choose operation
+    print("\nChoose an operation:")
+    print("1. Calculate the area between the curves")
+    print("2. Calculate the volume of revolution")
+    choice = input("Enter your choice (1 or 2): ")
+    if choice == "1":
+        a = float(input("Enter the lower limit of integration: "))
+        b = float(input("Enter the upper limit of integration: "))
+        area = area_between_curves(func1, func2, a, b)
+        print("The area between the curves is:", area)
+    elif choice == "2":
+        axis = input("Enter the axis of revolution ('x' or 'y'): ")
+        a = float(input("Enter the lower limit of integration: "))
+        b = float(input("Enter the upper limit of integration: "))
+        volume = volume_of_revolution(func1, a, b, axis)
+        print("The volume of revolution is:", volume)
+    else:
+        print("Invalid choice! Please enter 1 or 2.")
+if __name__ == "__main__":
+    main()
